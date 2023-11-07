@@ -1,5 +1,6 @@
 package Locations;
 
+import Armors.Armor;
 import Characters.Player;
 import Weapons.Weapon;
 
@@ -11,26 +12,32 @@ public class ToolStore extends NormalLoc{
     @Override
     public boolean onLocation() {
         System.out.println("------- Mağazaya Hoşgeldiniz ------");
-        System.out.println("1- Silahlar");
-        System.out.println("2- Zırhlar");
-        System.out.println("3- Çıkış Yap");
-        System.out.print("Bir işlem seçiniz: ");
-        int selectCase = input.nextInt();
-        while(selectCase < 1 || selectCase > 4) {
-            System.out.println("Geçersiz değer, tekrar giriniz: ");
-            selectCase = input.nextInt();
-        }
-        switch(selectCase) {
-            case 1:
-                printWeapon();
-                buyWeapon();
-                break;
-            case 2:
-                printArmor();
-                break;
-            case 3:
-                System.out.println("Bir daha bekleriz!");
-                return true;
+        boolean showMenu = true;
+        while(showMenu) {
+            System.out.println("1- Silahlar");
+            System.out.println("2- Zırhlar");
+            System.out.println("3- Çıkış Yap");
+            System.out.print("Bir işlem seçiniz: ");
+            int selectCase = input.nextInt();
+            while(selectCase < 1 || selectCase > 4) {
+                System.out.println("Geçersiz değer, tekrar giriniz: ");
+                selectCase = input.nextInt();
+            }
+            switch(selectCase) {
+                case 1:
+                    printWeapon();
+                    buyWeapon();
+                    break;
+                case 2:
+                    printArmor();
+                    buyArmor();
+                    break;
+                case 3:
+                    System.out.println("Bir daha bekleriz!");
+                    showMenu = false;
+                    break;
+            }
+
         }
         return true;
     }
@@ -69,6 +76,33 @@ public class ToolStore extends NormalLoc{
     }
 
     public void printArmor() {
-        System.out.println("Zırhlar");
+        System.out.println("------ Zırhlar ------");
+        System.out.println();
+        for(Armor armor: Armor.armors()) {
+            System.out.println(armor.getArmor() + " <Para: " + armor.getMoney() + ", ID: " + armor.getId() + ", Engelleme: " + armor.getBlock());
+        }
+    }
+
+    public void buyArmor() {
+        System.out.print("Bir zırh seçiniz: ");
+        int selectArmor = input.nextInt();
+        while(selectArmor < 1 || selectArmor > Armor.armors().length) {
+            System.out.print("Geçersiz bir değer girdiniz. Tekrar deneyin: ");
+            selectArmor = input.nextInt();
+        }
+        Armor selectedArmor = Armor.getArmorById(selectArmor);
+        if(selectedArmor != null) {
+            if(selectedArmor.getMoney() > this.getPlayer().getMoney()) {
+                System.out.println("Yeterli paranız bulunmamaktadır.");
+            } else {
+                System.out.println(selectedArmor.getArmor() + " zırhını satın aldınız.");
+                int newMoney = this.getPlayer().getMoney() - selectedArmor.getMoney();
+                System.out.println("Kalan paranız: " + this.getPlayer().getMoney());
+                System.out.println("Önceki zırhınız: " + this.getPlayer().getInventory().getArmor().getArmor());
+                this.getPlayer().getInventory().setArmor(selectedArmor);
+                System.out.println("Yeni zırhınız: " + this.getPlayer().getInventory().getArmor().getArmor());
+                this.getPlayer().printInfo();
+            }
+        }
     }
 }
