@@ -1,6 +1,9 @@
 package Characters;
 
 import java.util.Scanner;
+import Locations.Location;
+import Locations.SafeHouse;
+import Locations.ToolStore;
 
 public class Player {
     final Scanner input = new Scanner(System.in);
@@ -9,9 +12,11 @@ public class Player {
     private int healthy;
     private int money;
     private String name;
+    private Inventory inventory;
 
     public Player(String name) {
         this.name = name;
+        this.inventory = new Inventory();
     }
 
     public void selectChar() {
@@ -38,14 +43,19 @@ public class Player {
                 System.out.println("Geçerli bir değer giriniz.");
                 break;
         }
-        System.out.println("Karakter: " + this.getCharName() + ", Hasar: " + this.getDamage() + ", Sağlık: " + this.getHealthy() + ", Para: " + this.getMoney());
+        printInfo();
     }
+
 
     public void initPlayer(Character character) {
         this.setDamage(character.getDamage());
         this.setHealthy(character.getHealth());
         this.setMoney(character.getMoney());
         this.setCharName(character.getName());
+    }
+
+    public void printInfo() {
+        System.out.println("Karakter: " + this.getCharName() + ", Hasar: " + this.getDamage() + ", Sağlık: " + this.getHealthy() + ", Para: " + this.getMoney());
     }
 
     public String getCharName() {
@@ -57,7 +67,7 @@ public class Player {
     }
 
     public int getDamage() {
-        return this.damage;
+        return this.damage + this.getInventory().getWeapon().getDamage();
     }
 
     public void setDamage(int damage) {
@@ -86,5 +96,13 @@ public class Player {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public Inventory getInventory() {
+        return this.inventory;
+    }
+
+    public void setInventory(Inventory inventory) {
+        this.inventory = inventory;
     }
 }
