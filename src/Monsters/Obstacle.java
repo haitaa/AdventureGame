@@ -5,12 +5,16 @@ public class Obstacle {
     private int id;
     private int damage;
     private int health;
+    private int money;
+    private int defHealth;
 
-    public Obstacle(String name, int id, int damage, int health) {
+    public Obstacle(String name, int id, int damage, int health, int money) {
         this.name = name;
         this.id = id;
         this.damage = damage;
         this.health = health;
+        this.defHealth = health;
+        this.money = money;
     }
 
     public String getName() {
@@ -42,6 +46,26 @@ public class Obstacle {
     }
 
     public void setHealth(int health) {
+        if(health < 0) {
+            this.health = 0;
+        }
         this.health = health;
     }
+
+    public int getMoney() {
+        return this.money;
+    }
+
+    public void setMoney(int money) {
+        this.money = money;
+    }
+
+    public int getDefHealth() {
+        return this.defHealth;
+    }
+
+    public void setDefHealth(int defHealth) {
+        this.defHealth = defHealth;
+    }
+
 }

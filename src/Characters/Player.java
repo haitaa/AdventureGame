@@ -4,6 +4,7 @@ import java.util.Scanner;
 import Locations.Location;
 import Locations.SafeHouse;
 import Locations.ToolStore;
+import Weapons.Weapon;
 
 public class Player {
     final Scanner input = new Scanner(System.in);
@@ -72,8 +73,12 @@ public class Player {
         this.charName = charName;
     }
 
-    public int getDamage() {
+    public int getTotalDamage() {
         return this.damage + this.getInventory().getWeapon().getDamage();
+    }
+
+    public int getDamage() {
+        return this.damage;
     }
 
     public void setDamage(int damage) {
@@ -110,5 +115,9 @@ public class Player {
 
     public void setInventory(Inventory inventory) {
         this.inventory = inventory;
+    }
+
+    public Weapon getWeapon() {
+        return this.getInventory().getWeapon();
     }
 }
