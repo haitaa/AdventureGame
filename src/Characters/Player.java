@@ -14,6 +14,7 @@ public class Player {
     private int money;
     private String name;
     private Inventory inventory;
+    private int defHealth;
 
     public Player(String name) {
         this.name = name;
@@ -51,6 +52,7 @@ public class Player {
     public void initPlayer(Character character) {
         this.setDamage(character.getDamage());
         this.setHealthy(character.getHealth());
+        this.setDefHealth(character.getHealth());
         this.setMoney(character.getMoney());
         this.setCharName(character.getName());
     }
@@ -86,6 +88,9 @@ public class Player {
     }
 
     public int getHealthy() {
+        if(healthy < 0) {
+            this.healthy = 0;
+        }
         return this.healthy;
     }
 
@@ -115,6 +120,14 @@ public class Player {
 
     public void setInventory(Inventory inventory) {
         this.inventory = inventory;
+    }
+
+    public int getDefHealth() {
+        return this.defHealth;
+    }
+
+    public void setDefHealth(int defHealth) {
+        this.defHealth = defHealth;
     }
 
     public Weapon getWeapon() {

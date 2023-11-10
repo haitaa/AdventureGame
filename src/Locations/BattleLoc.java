@@ -32,7 +32,7 @@ public abstract class BattleLoc extends Location{
                 return true;
             }
         }
-        if(this.getPlayer().getHealthy() < 0) {
+        if(this.getPlayer().getHealthy() <= 0) {
             System.out.println("Öldünüz.");
             return false;
         }
@@ -70,6 +70,17 @@ public abstract class BattleLoc extends Location{
                 int newBalance = this.getObstacle().getMoney() + this.getPlayer().getMoney();
                 this.getPlayer().setMoney(newBalance);
                 System.out.println("Güncel paranız: " + this.getPlayer().getMoney());
+                switch(this.getName()) {
+                    case "Mağara":
+                        this.getPlayer().getInventory().setFood(1);
+                        break;
+                    case "Orman":
+                        this.getPlayer().getInventory().setFirewood(1);
+                        break;
+                    case "Nehir":
+                        this.getPlayer().getInventory().setWater(1);
+                        break;
+                }
             }
         }
         return false;

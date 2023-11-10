@@ -30,20 +30,42 @@ public class Game {
                     location = new ToolStore(player);
                     break;
                 case 3:
-                    location = new Cave(player);
-                    break;
+                    if(player.getInventory().completeCave() == 1){
+                        System.out.println("Buradaki görevi daha önce tamamlamışsınız.");
+                        location = new SafeHouse(player);
+                        break;
+                    } else {
+                        location = new Cave(player);
+                        break;
+                    }
                 case 4:
-                    location = new Forest(player);
-                    break;
+                    if(player.getInventory().completeForest() == 1) {
+                        System.out.println("Buradaki görevi daha önce tamamlamışsınız.");
+                        location = new SafeHouse(player);
+                        break;
+                    } else {
+                        location = new Forest(player);
+                        break;
+                    }
                 case 5:
-                    location = new River(player);
-                    break;
+                    if(player.getInventory().completeRiver() == 1) {
+                        System.out.println("Buradaki görevi daha önce tamamlamışsınız.");
+                        location = new SafeHouse(player);
+                        break;
+                    } else {
+                        location = new River(player);
+                        break;
+                    }
                 case 0:
                     location = null;
                     break;
                 default:
                     System.out.println("Lütfen geçerli bir değer giriniz.");
                     break;
+            }
+            if(player.getInventory().getFood() == 1 && player.getInventory().getWater() == 1 && player.getInventory().getFirewood() == 1) {
+                System.out.println("Oyunu Başarıyla Tamamladınız! Tebrik Ederiz!");
+                break;
             }
 
             if(!location.onLocation()) {
